@@ -18,11 +18,9 @@ class HomeViewModel @Inject constructor(
     private val app: Application,
 ) : ViewModel() {
     var homeState by mutableStateOf(HomeScreenState())
-    
     init {
         getGameList()
     }
-    
     fun onEvent(event: HomeScreenEvent) {
         when (event) {
             is HomeScreenEvent.Refresh -> {

@@ -5,4 +5,21 @@
     <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="server_timeout">The server is taking to long to response</string>
+    <string name="tags">Tags</string>
+    <string name="rating">Rating</string>
+    <string name="data_not_found">Data not Found</string>
+    <string name="website_">\"Website \"</string>
+    <string name="publisher_">\"Publisher \"</string>
+    <string name="developer_">\"Developer \"</string>
+    <string name="released_">\"Released \"</string>
+    <string name="nintendo">Nintendo Switch</string>
+    <string name="xbox">Xbox Series X</string>
+    <string name="ps5">PlayStation 5</string>
+    <string name="pc">PC</string>
+    <string name="deleted_from_favorite">Deleted from Favorite</string>
+    <string name="added_to_favorite">Added to Favorite</string>
+    <string name="favorite_icon">Favorite Icon</string>
+    <string name="browse_by_genre">Browse by Genre</string>
+    <string name="more">More</string>
+    <string name="next_icon">Next Icon</string>
 </resources>

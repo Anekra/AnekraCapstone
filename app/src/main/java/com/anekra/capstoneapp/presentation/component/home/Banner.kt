@@ -1,5 +1,6 @@
 package com.anekra.capstoneapp.presentation.component.home
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,10 +17,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import com.anekra.capstoneapp.domain.model.GameList
+import com.anekra.capstoneapp.domain.model.game.GameList
 import com.anekra.capstoneapp.presentation.screen.home.HomeViewModel
 import com.anekra.capstoneapp.util.ImageHolder
 import com.anekra.capstoneapp.util.LoadingBar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -48,19 +51,19 @@ fun BannerContent(
                 }
             }
         }
-//        LaunchedEffect(key1 = pagerState.settledPage) {
-//            launch {
-//                delay(3000)
-//                with(pagerState) {
-//                    animateScrollToPage(
-//                        page = if (currentPage < pageCount - 1) currentPage + 1 else 0,
-//                        animationSpec = tween(
-//                            durationMillis = 500
-//                        )
-//                    )
-//                }
-//            }
-//        }
+        LaunchedEffect(key1 = pagerState.settledPage) {
+            launch {
+                delay(3000)
+                with(pagerState) {
+                    animateScrollToPage(
+                        page = if (currentPage < pageCount - 1) currentPage + 1 else 0,
+                        animationSpec = tween(
+                            durationMillis = 500
+                        )
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -88,14 +91,12 @@ fun HorizontalPagerIndicator(
     pageCount: Int,
     modifier: Modifier,
     spacing: Dp = 4.dp,
-    activeColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 1f),
+    activeColor: Color = MaterialTheme.colorScheme.onSurface,
     inactiveColor: Color = activeColor.copy(alpha = 0.5f),
     indicatorShape: Shape = CircleShape,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

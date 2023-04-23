@@ -1,7 +1,9 @@
 package com.anekra.capstoneapp.presentation.component.home
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -19,12 +21,14 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.anekra.capstoneapp.R
+import com.anekra.capstoneapp.util.showToast
 
 @Composable
-fun PlatformContent() {
+fun PlatformContent(context: Context) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +36,7 @@ fun PlatformContent() {
             .padding(16.dp)
     ) {
         Column {
-            PlatformTitle()
+            PlatformTitle(context = context)
             LazyVerticalGrid(
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -42,16 +46,36 @@ fun PlatformContent() {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 item {
-                    PlatformItem(color = Color.Cyan, image = R.drawable.pc)
+                    PlatformItem(
+                        color = Color.Cyan,
+                        image = R.drawable.pc,
+                        platform = stringResource(R.string.pc),
+                        context = context
+                    )
                 }
                 item {
-                    PlatformItem(color = Color.Black, image = R.drawable.ps5)
+                    PlatformItem(
+                        color = Color.Black,
+                        image = R.drawable.ps5,
+                        platform = stringResource(R.string.ps5),
+                        context = context
+                    )
                 }
                 item {
-                    PlatformItem(color = Color.Green, image = R.drawable.xbox)
+                    PlatformItem(
+                        color = Color.Green,
+                        image = R.drawable.xbox,
+                        platform = stringResource(R.string.xbox),
+                        context = context
+                    )
                 }
                 item {
-                    PlatformItem(color = Color.Red, image = R.drawable.nitendo)
+                    PlatformItem(
+                        color = Color.Red,
+                        image = R.drawable.nintendo,
+                        platform = stringResource(R.string.nintendo),
+                        context = context
+                    )
                 }
             }
         }
@@ -59,7 +83,7 @@ fun PlatformContent() {
 }
 
 @Composable
-fun PlatformTitle() {
+fun PlatformTitle(context: Context) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -74,7 +98,13 @@ fun PlatformTitle() {
             modifier = Modifier
                 .width(48.dp)
                 .align(Alignment.Bottom)
-                .padding(bottom = 3.dp),
+                .padding(bottom = 3.dp)
+                .clickable {
+                    showToast(
+                        message = context.getString(R.string.more),
+                        context = context
+                    )
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -96,6 +126,8 @@ fun PlatformTitle() {
 fun PlatformItem(
     color: Color,
     image: Int,
+    platform: String,
+    context: Context
 ) {
     Box(
         modifier = Modifier
@@ -107,7 +139,8 @@ fun PlatformItem(
                     start = Offset(x = 0f, y = 0f),
                     end = Offset(x = 300f, y = 300f)
                 )
-            ),
+            )
+            .clickable { showToast(message = platform, context = context) },
         contentAlignment = Alignment.Center
     ) {
         Image(

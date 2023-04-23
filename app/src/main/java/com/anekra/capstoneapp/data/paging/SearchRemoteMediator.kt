@@ -8,8 +8,8 @@ import androidx.room.withTransaction
 import com.anekra.capstoneapp.data.local.db.GameListDatabase
 import com.anekra.capstoneapp.data.local.entity.game.GameListEntity
 import com.anekra.capstoneapp.data.local.entity.paging.RemoteKeysEntity
-import com.anekra.capstoneapp.data.mapper.toGameList
-import com.anekra.capstoneapp.data.mapper.toGameListEntity
+import com.anekra.capstoneapp.util.toGameList
+import com.anekra.capstoneapp.util.toGameListEntity
 import com.anekra.capstoneapp.data.network.RawgApi
 import com.anekra.capstoneapp.util.Constants.DEFAULT_PAGE_SIZE
 import com.anekra.capstoneapp.util.applyQueries
@@ -25,6 +25,10 @@ class SearchRemoteMediator @Inject constructor(
 ) : RemoteMediator<Int, GameListEntity>() {
     
     private val remoteKeysDao = db.remoteKeysDao()
+    
+    override suspend fun initialize(): InitializeAction {
+        return InitializeAction.SKIP_INITIAL_REFRESH
+    }
     
     override suspend fun load(
         loadType: LoadType,

@@ -19,11 +19,16 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.paging.compose.LazyPagingItems
+import com.anekra.capstoneapp.domain.model.game.GameList
 import com.anekra.capstoneapp.presentation.screen.search.SearchScreenEvent
 import com.anekra.capstoneapp.presentation.screen.search.SearchViewModel
 
 @Composable
-fun SearchBarContent(searchViewModel: SearchViewModel) {
+fun SearchBarContent(
+    viewModel: SearchViewModel,
+    lazyPagingItems: LazyPagingItems<GameList>,
+) {
     Row(
         modifier = Modifier
             .zIndex(2f)
@@ -31,32 +36,40 @@ fun SearchBarContent(searchViewModel: SearchViewModel) {
             .padding(horizontal = 16.dp)
     ) {
         Column {
-            CustomSearchBar(searchViewModel = searchViewModel)
+            CustomSearchBar(
+                viewModel = viewModel,
+                lazyPagingItems = lazyPagingItems
+            )
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun CustomSearchBar(searchViewModel: SearchViewModel) {
+fun CustomSearchBar(
+    viewModel: SearchViewModel,
+    lazyPagingItems: LazyPagingItems<GameList>
+) {
     Box {
-        val state = searchViewModel.searchState
+        val state = viewModel.searchState
         val (active, setActive) = remember { mutableStateOf(false) }
         val softwareKeyboardController = LocalSoftwareKeyboardController.current
         
         DockedSearchBar(
             query = state.searchQuery,
             onQueryChange = {
-                searchViewModel.onEvent(event = SearchScreenEvent.OnSearchQueryChange(query = it))
+                viewModel.onEvent(event = SearchScreenEvent.OnSearchQueryChange(
+                    query = it,
+                    lazyPagingItems = lazyPagingItems
+                ))
             },
             onSearch = {
                 setActive(false)
+                softwareKeyboardController?.hide()
+                lazyPagingItems.refresh()
             },
             active = false,
-            onActiveChange = {
-                if (!active)
-                    softwareKeyboardController?.hide()
-            },
+            onActiveChange = {},
             placeholder = { Text(text = "Search Games") },
             leadingIcon = {
                 if (!active) {
@@ -73,9 +86,10 @@ fun CustomSearchBar(searchViewModel: SearchViewModel) {
                         imageVector = Icons.Default.Clear,
                         contentDescription = "Clear Icon",
                         modifier = Modifier.clickable {
-                            searchViewModel.onEvent(
+                            viewModel.onEvent(
                                 event = SearchScreenEvent.OnSearchQueryChange(
-                                    query = ""
+                                    query = "",
+                                    lazyPagingItems = lazyPagingItems
                                 )
                             )
                         })
@@ -97,6 +111,7 @@ fun CustomSearchBar(searchViewModel: SearchViewModel) {
     
         BackHandler(enabled = active) {
             setActive(false)
+            softwareKeyboardController?.hide()
         }
     }
 }

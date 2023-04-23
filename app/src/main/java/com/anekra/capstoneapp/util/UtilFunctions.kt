@@ -1,14 +1,15 @@
 package com.anekra.capstoneapp.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
 import androidx.compose.material3.CircularProgressIndicator
@@ -34,7 +35,10 @@ import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.anekra.capstoneapp.R
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
@@ -51,7 +55,7 @@ fun String.toAllCaps(): String {
 fun <T : Any> LazyStaggeredGridScope.items(
     items: LazyPagingItems<T>,
     key: ((item: T) -> Any)? = null,
-    itemContent: @Composable LazyStaggeredGridItemScope.(item: T) -> Unit
+    itemContent: @Composable LazyStaggeredGridItemScope.(item: T) -> Unit,
 ) {
     items(
         count = items.itemCount,
@@ -146,7 +150,7 @@ fun StarShape(
     val brush = Brush.linearGradient(
         colors = colors,
         start = Offset(x = 0f, y = 0f),
-        end = Offset(x = rating * 20, y = 0f)
+        end = Offset(x = rating * 5f, y = 0f)
     )
     
     Box(
@@ -154,6 +158,33 @@ fun StarShape(
     ) {
         Canvas(modifier = Modifier.align(Alignment.Center)) {
             drawPath(path = path, brush = brush)
+        }
+    }
+}
+
+@Composable
+fun FiveStarShape(
+    rating: Float
+) {
+    val filledStars = rating.toInt()
+    val remainingStar = rating - filledStars != 0f
+    val emptyStars = 5 - filledStars - if (remainingStar) 1 else 0
+    
+    Row {
+        repeat(filledStars) {
+            StarShape(
+                rating = 100f
+            )
+        }
+        if (remainingStar) {
+            StarShape(
+                rating = rating
+            )
+        }
+        repeat(emptyStars) {
+            StarShape(
+                rating = 0f
+            )
         }
     }
 }
@@ -186,6 +217,28 @@ fun ImageHolder(
             )
         }
     }
+}
+
+@Composable
+fun HandleBackPress(onBackPressed: () -> Unit) {
+    val dispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    
+    val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            onBackPressed()
+        }
+    }
+    
+    DisposableEffect(dispatcher) {
+        dispatcher?.addCallback(callback)
+        onDispose {
+            callback.remove()
+        }
+    }
+}
+
+fun showToast(message: String, context: Context) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 fun applyQueries(
@@ -224,12 +277,32 @@ fun applyQueries(
     return queries
 }
 
-fun getTabList() = listOf("Game", "Creator", "Developer", "Platform", "Genre", "Publisher", "Tag", "Store")
+fun formatDate(dateString: String?): String {
+    return if (dateString != null) {
+        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val outputDateFormat = SimpleDateFormat("MMM d, yyyy", Locale.US)
+        
+        val date = inputDateFormat.parse(dateString) as Date
+        
+        outputDateFormat.format(date)
+    } else ""
+}
+
+suspend fun calculateLazyItemsHeight(itemHeight: Dp, itemCount: Int, topBarPadding: Dp): Dp {
+    val displayMetrics = withContext(Dispatchers.Default) {
+        Resources.getSystem().displayMetrics
+    }
+    val maxHeight = displayMetrics.heightPixels
+    val itemHeightAsInt = itemHeight.value.toInt()
+    
+    return if ((itemHeightAsInt * itemCount) < maxHeight) itemHeight * itemCount
+    else maxHeight.dp - topBarPadding
+}
 
 suspend fun waitForConditionOrTimeout(
     getCondition: suspend () -> Boolean,
     context: Context,
-    onTimeout: suspend (Boolean, String) -> Unit = { _, _ -> }
+    onTimeout: suspend (Boolean, String) -> Unit = { _, _ -> },
 ): Pair<Boolean, String> {
     val isLoading = mutableStateOf(true)
     val elapsedTime = mutableStateOf(0L)

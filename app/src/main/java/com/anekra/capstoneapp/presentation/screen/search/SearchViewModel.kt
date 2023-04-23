@@ -35,8 +35,9 @@ class SearchViewModel @Inject constructor(
                 searchState = searchState.copy(searchQuery = event.query, isLoading = true)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
-                    delay(1000L)
+                    delay(750L)
                     searchGameList()
+                    event.lazyPagingItems.refresh()
                 }
             }
         }

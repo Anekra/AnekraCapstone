@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 fun HomeTopBar(scrollBehavior: TopAppBarScrollBehavior) {
     TopAppBar(
         title = {
-            Text(text = "Home")
+            Text(text = "Favorite")
         },
         scrollBehavior = scrollBehavior
     )

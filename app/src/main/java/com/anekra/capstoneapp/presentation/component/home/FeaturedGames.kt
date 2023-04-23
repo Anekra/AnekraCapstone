@@ -2,6 +2,7 @@ package com.anekra.capstoneapp.presentation.component.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.anekra.capstoneapp.R
-import com.anekra.capstoneapp.domain.model.GameList
+import com.anekra.capstoneapp.domain.model.game.GameList
 import com.anekra.capstoneapp.presentation.screen.home.HomeViewModel
 import com.anekra.capstoneapp.util.Esrb
 import com.anekra.capstoneapp.util.ImageHolder
@@ -28,6 +29,7 @@ import com.anekra.capstoneapp.util.StarShape
 
 @Composable
 fun FeaturedGamesContent(
+    navigateToDetails: (String) -> Unit,
     viewModel: HomeViewModel,
     lazyPagingItems: LazyPagingItems<GameList>,
 ) {
@@ -59,7 +61,10 @@ fun FeaturedGamesContent(
                             lazyPagingItems.itemSnapshotList.items.sortedBy { list ->
                                 list.rating
                             }.reversed().also { gameList ->
-                                FeaturedItem(game = gameList[index])
+                                FeaturedItem(
+                                    navigateToDetails = navigateToDetails,
+                                    game = gameList[index]
+                                )
                             }
                         } else {
                             if (index == 20) {
@@ -86,13 +91,17 @@ fun FeaturedTitle() {
 }
 
 @Composable
-fun FeaturedItem(game: GameList) {
+fun FeaturedItem(
+    navigateToDetails: (String) -> Unit,
+    game: GameList,
+) {
     Column(
         modifier = Modifier
             .height(260.dp)
             .padding(horizontal = 8.dp)
             .clip(RoundedCornerShape(size = 10.dp))
             .background(color = MaterialTheme.colorScheme.surface)
+            .clickable { navigateToDetails(game.remoteId) }
     ) {
         Box(
             modifier = Modifier
@@ -107,11 +116,11 @@ fun FeaturedItem(game: GameList) {
             }
             RatingHolder(
                 modifier = Modifier.align(Alignment.TopEnd),
-                data = game
+                rating = game.rating ?: 0f
             )
             EsrbRatingHolder(
                 modifier = Modifier.align(Alignment.BottomEnd),
-                data = game
+                esrbRating = game.esrbRating?.name ?: ""
             )
         }
         FeaturedFooter(data = game)
@@ -150,7 +159,7 @@ fun FeaturedItemLimit() {
 @Composable
 fun RatingHolder(
     modifier: Modifier,
-    data: GameList?,
+    rating: Float,
 ) {
     Box(
         modifier = modifier
@@ -174,8 +183,8 @@ fun RatingHolder(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(text = data?.rating.toString(), color = MaterialTheme.colorScheme.onSurface)
-            StarShape(rating = data?.rating.toString().toFloat())
+            Text(text = rating.toString(), color = MaterialTheme.colorScheme.onSurface)
+            StarShape(rating = rating)
         }
     }
 }
@@ -183,7 +192,7 @@ fun RatingHolder(
 @Composable
 fun EsrbRatingHolder(
     modifier: Modifier,
-    data: GameList?,
+    esrbRating: String,
 ) {
     Box(
         modifier = modifier
@@ -191,7 +200,7 @@ fun EsrbRatingHolder(
             .padding(4.dp)
             .clip(RoundedCornerShape(4.dp))
     ) {
-        val esrbId = Esrb.values().find { it.rating == data?.esrbRating?.name.toString() }?.image
+        val esrbId = Esrb.values().find { it.rating == esrbRating }?.image
         Image(
             painter = painterResource(id = esrbId ?: R.drawable.esrb_pending),
             contentDescription = "Esrb Rating Image"

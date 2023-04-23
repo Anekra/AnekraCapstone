@@ -2,6 +2,7 @@ package com.anekra.capstoneapp.data.local.entity.game
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.anekra.capstoneapp.data.local.entity.platform.PlatformEntity
 
 @Entity(tableName = "gameListEntity")
 data class GameListEntity(
@@ -10,9 +11,8 @@ data class GameListEntity(
     val slug: String,
     val name: String? = null,
     val released: String? = null,
-    val tba: Boolean? = null,
     val backgroundImage: String? = null,
     val rating: Float? = null,
     val esrbRating: EsrbRatingEntity? = null,
-    val platforms: List<PlatformsItemEntity>? = null
+    val platforms: List<PlatformEntity>? = null
 )

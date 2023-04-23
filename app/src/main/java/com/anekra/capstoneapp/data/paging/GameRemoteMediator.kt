@@ -8,12 +8,12 @@ import androidx.room.withTransaction
 import com.anekra.capstoneapp.data.local.db.GameListDatabase
 import com.anekra.capstoneapp.data.local.entity.game.GameListEntity
 import com.anekra.capstoneapp.data.local.entity.paging.RemoteKeysEntity
-import com.anekra.capstoneapp.data.mapper.toGameList
-import com.anekra.capstoneapp.data.mapper.toGameListEntity
 import com.anekra.capstoneapp.data.network.RawgApi
 import com.anekra.capstoneapp.util.Constants.DEFAULT_PAGE_SIZE
 import com.anekra.capstoneapp.util.applyQueries
 import com.anekra.capstoneapp.util.logAsString
+import com.anekra.capstoneapp.util.toGameList
+import com.anekra.capstoneapp.util.toGameListEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

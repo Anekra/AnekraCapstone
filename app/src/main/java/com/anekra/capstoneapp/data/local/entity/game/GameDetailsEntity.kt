@@ -2,29 +2,31 @@ package com.anekra.capstoneapp.data.local.entity.game
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.anekra.capstoneapp.data.local.entity.developer.DeveloperItemEntity
+import com.anekra.capstoneapp.data.local.entity.genre.GenreItemEntity
+import com.anekra.capstoneapp.data.local.entity.platform.PlatformEntity
+import com.anekra.capstoneapp.data.local.entity.publisher.PublisherItemEntity
+import com.anekra.capstoneapp.data.local.entity.store.StoreDetailsEntity
+import com.anekra.capstoneapp.data.local.entity.tag.TagItemEntity
 
 @Entity(tableName = "gameDetailsEntity")
 data class GameDetailsEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
+    val id: String,
     val slug: String? = null,
     val name: String? = null,
     val released: String? = null,
-    val tba: Boolean? = null,
     val backgroundImage: String? = null,
+    val backgroundImageAdditional: String? = null,
     val description: String? = null,
     val website: String? = null,
-    val rating: Int? = null,
-    val ratingTop: Int? = null,
-    val ratings: RatingsEntity? = null,
-    val reviewTextCount: String? = null,
+    val rating: Float? = null,
     val added: Int? = null,
-    val addedByStatus: AddedByStatusEntity? = null,
-    val playTime: Int? = null,
-    val suggestionsCount: Int? = null,
-    val updated: String? = null,
     val esrbRating: EsrbRatingEntity? = null,
-    val youtubeLink: String? = null,
-    val twitchLink: String? = null,
-    val platforms: List<PlatformsItemEntity>? = null
+    val platforms: List<PlatformEntity>? = null,
+    val developers: List<DeveloperItemEntity>? = null,
+    val genres: List<GenreItemEntity>? = null,
+    val tags: List<TagItemEntity>? = null,
+    val publishers: List<PublisherItemEntity>? = null,
+    val stores: List<StoreDetailsEntity>? = null
 )
