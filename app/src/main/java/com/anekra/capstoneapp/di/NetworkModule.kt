@@ -1,8 +1,8 @@
 package com.anekra.capstoneapp.di
 
-import com.anekra.capstoneapp.data.network.ApiKeyInterceptor
-import com.anekra.capstoneapp.data.network.RawgApi
-import com.anekra.capstoneapp.util.Constants.BASE_URL
+import com.anekra.data.network.ApiKeyInterceptor
+import com.anekra.data.network.RawgApi
+import com.anekra.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +24,8 @@ object NetworkModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
             .addInterceptor(apiKeyInterceptor)
+            .addInterceptor(interceptor)
             .build()
     }
     

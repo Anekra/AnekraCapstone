@@ -2,8 +2,8 @@ package com.anekra.capstoneapp.di
 
 import android.app.Application
 import androidx.room.Room
-import com.anekra.capstoneapp.data.local.db.GameListDatabase
-import com.anekra.capstoneapp.util.Constants.DATABASE_NAME
+import com.anekra.data.local.db.GameListDatabase
+import com.anekra.util.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

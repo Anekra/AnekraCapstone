@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_not_found">Data not Found</string>
+    <string name="tags">Tags</string>
+    <string name="rating">Rating</string>
+    <string name="website_">\"Website \"</string>
+    <string name="publisher_">\"Publisher \"</string>
+    <string name="developer_">\"Developer \"</string>
+    <string name="released_">\"Released \"</string>
+    <string name="deleted_from_favorite">Deleted from Favorite</string>
+    <string name="added_to_favorite">Added to Favorite</string>
+    <string name="favorite_icon">Favorite Icon</string>
+</resources>

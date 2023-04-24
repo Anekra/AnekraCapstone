@@ -1,7 +1,7 @@
 package com.anekra.capstoneapp.di
 
-import com.anekra.capstoneapp.data.repository.GameRepositoryImpl
-import com.anekra.capstoneapp.domain.repository.GameRepository
+import com.anekra.data.repository.GameRepositoryImpl
+import com.anekra.domain.repository.GameRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

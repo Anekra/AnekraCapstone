@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.anekra.capstoneapp.presentation.screen.MainScreen
-import com.anekra.capstoneapp.ui.theme.AnekrasCapstoneTheme
+import com.anekra.ui.theme.AnekrasCapstoneTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

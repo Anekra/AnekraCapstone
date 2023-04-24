@@ -1,0 +1,59 @@
+[versions]
+compose-version = '1.4.2'
+core-ktx = "1.10.0"
+lifecycle-runtime-ktx = "2.6.1"
+activity-compose = "1.7.1"
+material3 = "1.1.0-rc01"
+junit = "4.13.2"
+junit-ext = "1.1.5"
+espresso-core = "3.5.1"
+navigation-compose = "2.6.0-beta01"
+accompanist-swiperefresh = "0.24.2-alpha"
+retrofit = "2.9.0"
+converter-gson = "2.9.0"
+okhttp = "4.10.0"
+logging-interceptor = "4.9.0"
+room-version = "2.5.1"
+hilt-android = "2.44.2"
+hilt-android-compiler = "2.44"
+hilt-navigation-compose = "1.0.0"
+hilt-android-testing = "2.44"
+coil-compose = "2.2.2"
+core-splashscreen = "1.0.1"
+paging-compose = "1.0.0-alpha18"
+accompanist-systemuicontroller = "0.27.0"
+play-core = '1.10.0'
+
+[libraries]
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx"}
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx"}
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose"}
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-version"}
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-version"}
+material3 = { module = "androidx.compose.material3:material3", version.ref = "material3"}
+junit = { module = "junit:junit", version.ref = "junit"}
+junit-ext = { module = "androidx.test.ext:junit", version.ref = "junit-ext"}
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core"}
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-version"}
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-version"}
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-version"}
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose"}
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist-swiperefresh"}
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converter-gson" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "logging-interceptor" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
+room-testing = { module = "androidx.room:room-testing", version.ref = "room-version" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room-version" }
+dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android-compiler" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+dagger-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt-android-testing" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-systemuicontroller" }
+play-core = { module = "com.google.android.play:core", version.ref = "play-core" }

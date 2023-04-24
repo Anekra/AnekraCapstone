@@ -3,7 +3,6 @@
     <string name="window_reference_not_available">Not in an activity - unable to get Window reference</string>
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
-    <string name="home">Home</string>
     <string name="server_timeout">The server is taking to long to response</string>
     <string name="tags">Tags</string>
     <string name="rating">Rating</string>
@@ -22,4 +21,7 @@
     <string name="browse_by_genre">Browse by Genre</string>
     <string name="more">More</string>
     <string name="next_icon">Next Icon</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_common">Common</string>
+    <string name="title_dynamicfeaturefavorite">Delete all favorite</string>
 </resources>

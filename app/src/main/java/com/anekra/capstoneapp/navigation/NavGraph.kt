@@ -4,10 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.anekra.capstoneapp.navigation.screen.details.detailsRoute
-import com.anekra.capstoneapp.navigation.screen.favorite.favoriteRoute
-import com.anekra.capstoneapp.navigation.screen.home.homeRoute
-import com.anekra.capstoneapp.navigation.screen.search.searchRoute
 
 @Composable
 fun MainNavGraph(

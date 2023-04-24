@@ -11,10 +11,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.anekra.capstoneapp.navigation.MainNavGraph
-import com.anekra.capstoneapp.navigation.screen.Screens
-import com.anekra.capstoneapp.presentation.component.bottomnav.BottomNav
-import com.anekra.capstoneapp.presentation.component.home.topbar.HomeTopBar
-import com.anekra.capstoneapp.presentation.component.search.topbar.SearchTopBar
+import com.anekra.home.component.topbar.HomeTopBar
+import com.anekra.search.component.topbar.SearchTopBar
+import com.anekra.ui.component.bottomnav.BottomNav
+import com.anekra.util.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

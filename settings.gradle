@@ -14,3 +14,12 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Anekra's Capstone"
 include ':app'
+include ':core:ui'
+include ':core:util'
+include ':data'
+include ':domain'
+include ':feature:home'
+include ':feature:search'
+include ':feature:details'
+include ':feature:favorite'
+include ':dynamicfeaturefavorite'

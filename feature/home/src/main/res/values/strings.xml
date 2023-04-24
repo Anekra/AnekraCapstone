@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nintendo">Nintendo Switch</string>
+    <string name="xbox">Xbox Series X</string>
+    <string name="ps5">PlayStation 5</string>
+    <string name="pc">PC</string>
+    <string name="browse_by_genre">Browse by Genre</string>
+    <string name="more">More</string>
+    <string name="next_icon">Next Icon</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="window_reference_not_available">Not in an activity - unable to get Window reference</string>
+    <string name="favorite">Favorite</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+</resources>
