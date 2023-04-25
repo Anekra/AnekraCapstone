@@ -46,9 +46,6 @@ data class GameListResponse(
 	@field:SerializedName("id")
 	val id: Int,
 	
-	@field:SerializedName("added_by_status")
-	val addedByStatus: AddedByStatusResponse? = null,
-	
 	@field:SerializedName("ratings_count")
 	val ratingsCount: Int? = null,
 	

@@ -1,6 +1,5 @@
 package com.anekra.search.screen
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: GameRepository,
-    private val app: Application,
+    private val repository: GameRepository
 ) : ViewModel() {
     var searchState by mutableStateOf(SearchScreenState())
     

@@ -21,7 +21,5 @@
     <string name="browse_by_genre">Browse by Genre</string>
     <string name="more">More</string>
     <string name="next_icon">Next Icon</string>
-    <string name="title_favorite">Favorite</string>
-    <string name="title_common">Common</string>
     <string name="title_dynamicfeaturefavorite">Delete all favorite</string>
 </resources>
