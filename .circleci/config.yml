@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   android: circleci/android@0.2.1
-  codecov: codecov/codecov@1.0.2
 
 jobs:
   build:
@@ -11,6 +10,12 @@ jobs:
       - checkout
       - restore_cache:
           key: android-orb-v1-
+      - run:
+          name: Rawg Apikey
+          command: touch apikey.properties
+      - run:
+          name: Add Api Key
+          command: echo "API_KEY=\"API_KEY\"" >> apikey.properties
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
@@ -25,9 +30,12 @@ jobs:
       - run:
           name: Run Build
           command: ./gradlew build
-      - codecov/upload:
-          file: './coverage/clover.xml'
-          token: e128fbb1-a931-4afe-a70e-43a438c2ad6c
+      - run:
+          name: Load environment variables
+          command: |
+            set -o allexport
+            source $CIRCLECI_PROPERTIES
+            set +o allexport
       - store_artifacts:
           path: app/build/reports
           destination: reports
