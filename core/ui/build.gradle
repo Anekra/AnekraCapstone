@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 apply from: '../../common.gradle'
@@ -47,6 +48,11 @@ dependencies {
     implementation libs.accompanist.systemuicontroller
 
     implementation libs.hilt.navigation.compose
+
+    kapt libs.dagger.hilt.android.compiler
+    kaptTest libs.dagger.hilt.android.compiler
+
+    implementation libs.play.core
 
     implementation project(":domain")
     implementation project(":core:util")

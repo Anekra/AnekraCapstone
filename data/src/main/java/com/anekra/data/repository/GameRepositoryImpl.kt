@@ -1,6 +1,7 @@
 package com.anekra.data.repository
 
 import androidx.paging.*
+import com.anekra.data.local.dao.GameDao
 import com.anekra.data.local.db.GameListDatabase
 import com.anekra.data.mapper.*
 import com.anekra.data.network.RawgApi
@@ -25,6 +26,7 @@ import javax.inject.Singleton
 class GameRepositoryImpl @Inject constructor(
     private val api: RawgApi,
     private val db: GameListDatabase,
+    private val dao: GameDao
 ) : GameRepository {
     override fun getGameList(
         fetchFromRemote: Boolean,
@@ -35,10 +37,11 @@ class GameRepositoryImpl @Inject constructor(
             remoteMediator = GameRemoteMediator(
                 api = api,
                 db = db,
+                dao = dao,
                 fetchFromRemote = fetchFromRemote
             )
         ) {
-            db.gameDao().getGameListAsPagingSource()
+            dao.getGameListAsPagingSource()
         }.flow.map { pagingData ->
             pagingData.map { gameListEntity ->
                 gameListEntity.toGameList()
@@ -56,17 +59,17 @@ class GameRepositoryImpl @Inject constructor(
     }
     
     override suspend fun getGameListCount(): Int {
-        return db.gameDao().getGameListCount()
+        return dao.getGameListCount()
     }
     
     override suspend fun getLocalGameDetails(id: String): GameDetails? {
-        return db.gameDao().getGameDetails(id = id)?.toGameDetails()
+        return dao.getGameDetails(id = id)?.toGameDetails()
     }
     
     override fun getLocalGameWithScreenShots(gameDetailsId: String): Flow<GameWithScreenShotsDomain?> {
         return flow {
             
-            db.gameDao().getGameWithScreenShots(gameDetailsId = gameDetailsId)
+            dao.getGameWithScreenShots(gameDetailsId = gameDetailsId)
                 ?.collect {
                     emit(
                         value = GameWithScreenShotsDomain(
@@ -87,26 +90,26 @@ class GameRepositoryImpl @Inject constructor(
     }
     
     override suspend fun addGameToFavorite(game: GameDetails) {
-        db.gameDao().addGameToFavorite(data = game.toGameDetailsEntity())
+        dao.addGameToFavorite(data = game.toGameDetailsEntity())
     }
     
     override suspend fun addScreenShotsToFavorite(screenShots: List<ScreenShotsItem>, id: String) {
-        db.gameDao().addScreenShotsToFavorite(
+        dao.addScreenShotsToFavorite(
             data = screenShots.toListOfScreenShotsItemEntity(gameDetailsId = id)
         )
     }
     
     override suspend fun deleteGameWithScreenShots(gameDetails: GameDetails) {
-        db.gameDao().deleteGameWithScreenShots(gameDetails = gameDetails.toGameDetailsEntity())
+        dao.deleteGameWithScreenShots(gameDetails = gameDetails.toGameDetailsEntity())
     }
     
     override suspend fun deleteAllGameListWithScreenShots() {
-        db.gameDao().deleteAllGameListWithScreenShots()
+        dao.deleteAllGameListWithScreenShots()
     }
     
     override fun getGameListAsList(): Flow<List<GameList>> {
         return flow {
-            db.gameDao().getGameListAsList().collect {
+            dao.getGameListAsList().collect {
                 emit(value = it.map { gameListEntity -> gameListEntity.toGameList() })
             }
         }
@@ -114,7 +117,7 @@ class GameRepositoryImpl @Inject constructor(
     
     override fun getLocalGameListWithScreenShots(): Flow<List<GameWithScreenShotsDomain>> {
         return flow {
-            db.gameDao().getGameListWithScreenShots()?.let { flowOfGameWithScreenShotsList ->
+            dao.getGameListWithScreenShots()?.let { flowOfGameWithScreenShotsList ->
                 flowOfGameWithScreenShotsList.collect { gameWithScreenShotsList ->
                     val lastIndex = gameWithScreenShotsList.size - 1
                     val gameDetails = (0..lastIndex).map {

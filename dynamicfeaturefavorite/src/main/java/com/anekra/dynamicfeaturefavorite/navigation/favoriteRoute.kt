@@ -1,4 +1,4 @@
-package com.anekra.capstoneapp.navigation
+package com.anekra.dynamicfeaturefavorite.navigation
 
 import android.app.Activity
 import androidx.compose.foundation.background
@@ -12,29 +12,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.anekra.favorite.component.topbar.FavoriteTopBar
-import com.anekra.favorite.screen.FavoriteScreen
-import com.anekra.favorite.screen.FavoriteViewModel
-import com.anekra.util.HandleBackPress
-import com.anekra.util.LoadingBar
-import com.anekra.util.Screens
-import com.anekra.util.showToast
+import com.anekra.dynamicfeaturefavorite.presentation.component.topbar.FavoriteTopBar
+import com.anekra.dynamicfeaturefavorite.presentation.screen.FavoriteScreen
+import com.anekra.dynamicfeaturefavorite.presentation.screen.FavoriteScreenEvent
+import com.anekra.dynamicfeaturefavorite.presentation.screen.FavoriteViewModel
+import com.anekra.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.favoriteRoute(
-    navHostController: NavHostController,
-    paddingValues: PaddingValues,
+    navHostController: NavHostController
 ) {
     composable(route = Screens.Favorite.route) {
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-        val viewModel: FavoriteViewModel = hiltViewModel()
-        val showDialog = remember { mutableStateOf(false) }
         val context = LocalContext.current
-        
+        val viewModelProvider = ViewModelProvider(context as ViewModelStoreOwner)
+        val viewModel: FavoriteViewModel = viewModelProvider[FavoriteViewModel::class.java]
+        val showDialog = remember { mutableStateOf(false) }
+
         Scaffold(
             topBar = {
                 FavoriteTopBar(
@@ -42,8 +41,7 @@ fun NavGraphBuilder.favoriteRoute(
                     gameDetailsList = viewModel.favoriteState.favoriteGames ?: emptyList(),
                     showDialog = {
                         showDialog.value = it
-                    },
-                    context = context
+                    }
                 )
             }
         ) {
@@ -52,10 +50,11 @@ fun NavGraphBuilder.favoriteRoute(
             else {
                 FavoriteScreen(
                     navigateToDetails = { gameId ->
-                        navHostController.navigate(Screens.Details.passGameId(gameId = gameId))
+                        gameId.logAsString("faviteRoute game id")
+                        navHostController.navigate(Screens.FavoriteDetails.passFavoriteGameId(gameId = gameId))
                     },
                     gameDetailsList = viewModel.favoriteState.favoriteGames ?: emptyList(),
-                    paddingValues = Pair(it, paddingValues)
+                    paddingValues = it
                 )
                 if (showDialog.value) {
                     AlertDialog(
@@ -82,7 +81,7 @@ fun NavGraphBuilder.favoriteRoute(
                                     )
                                 }
                                 TextButton(onClick = {
-                                    viewModel.onEvent(com.anekra.favorite.screen.FavoriteScreenEvent.DeleteAllFavorites)
+                                    viewModel.onEvent(FavoriteScreenEvent.DeleteAllFavorites)
                                     showDialog.value = false
                                     showToast(
                                         message = "${viewModel.favoriteState.favoriteGames?.size} items deleted",
@@ -97,7 +96,7 @@ fun NavGraphBuilder.favoriteRoute(
                 }
             }
         }
-        
+
         HandleBackPress {
             (context as Activity).finish()
         }

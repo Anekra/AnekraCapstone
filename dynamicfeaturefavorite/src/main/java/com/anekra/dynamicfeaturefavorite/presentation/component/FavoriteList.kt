@@ -1,4 +1,4 @@
-package com.anekra.favorite.component
+package com.anekra.dynamicfeaturefavorite.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,12 +26,12 @@ import com.anekra.util.ImageHolder
 fun FavoriteListContent(
     navigateToDetails: (String) -> Unit,
     gameDetailsList: List<GameWithScreenShotsDomain>,
-    paddingValues: Pair<PaddingValues, PaddingValues>,
+    paddingValues: PaddingValues
 ) {
     Row(
         modifier = Modifier.padding(
-            top = paddingValues.first.calculateTopPadding(),
-            bottom = paddingValues.second.calculateBottomPadding()
+            top = paddingValues.calculateTopPadding(),
+            bottom = paddingValues.calculateBottomPadding()
         )
     ) {
         if (gameDetailsList.isNotEmpty()) {

@@ -21,6 +21,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
         buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+        buildConfigField("String", "HOST_NAME", "\"api.rawg.io\"")
+        buildConfigField("String", "PASS_PHRASE", "\"capstone\"")
+        buildConfigField("String", "PIN_A", "\"sha256/qWyRb4XU1uly592SZOsXwXJ7CysZfa1SAHtM6Free6I=\"")
+        buildConfigField("String", "PIN_B", "\"sha256/81Wf12bcLlFHQAfJluxnzZ6Frg+oJ9PWY/Wrwur8viQ=\"")
+        buildConfigField("String", "PIN_C", "\"sha256/hxqRlPTu1bMS/0DITB1SSu0vd4u/8l8TjPgfaAp63Gc=\"")
     }
 
     buildTypes {

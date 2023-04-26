@@ -25,4 +25,5 @@ import com.anekra.data.local.typeconverter.TypeConverterRoom
 abstract class GameListDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
     abstract fun remoteKeysDao(): RemoteKeysDao
+   
 }

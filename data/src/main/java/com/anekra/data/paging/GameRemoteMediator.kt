@@ -5,6 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.anekra.data.local.dao.GameDao
 import com.anekra.data.local.db.GameListDatabase
 import com.anekra.data.local.entity.game.GameListEntity
 import com.anekra.data.local.entity.paging.RemoteKeysEntity
@@ -17,12 +18,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class GameRemoteMediator @Inject constructor(
+class GameRemoteMediator(
     private val api: RawgApi,
     private val db: GameListDatabase,
+    private val dao: GameDao,
     private val fetchFromRemote: Boolean,
 ) : RemoteMediator<Int, GameListEntity>() {
     
@@ -34,7 +35,7 @@ class GameRemoteMediator @Inject constructor(
     ): MediatorResult {
         return try {
             val localDataCount = withContext(Dispatchers.IO) {
-                db.gameDao().getGameListCount()
+                dao.getGameListCount()
             }
             if (localDataCount <= 11 || fetchFromRemote) {
                 val currentPage = when (loadType) {
@@ -75,7 +76,7 @@ class GameRemoteMediator @Inject constructor(
                 
                 db.withTransaction {
                     if (loadType == LoadType.REFRESH) {
-                        db.gameDao().deleteAllGameList()
+                        dao.deleteAllGameList()
                         remoteKeysDao.deleteAllRemoteKeys()
                     }
                     response?.let {
@@ -87,7 +88,7 @@ class GameRemoteMediator @Inject constructor(
                             )
                         }
                         remoteKeysDao.addAllRemoteKeys(remoteKeyEntities = keys)
-                        db.gameDao().insertGameList(list = response.toGameListEntity())
+                        dao.insertGameList(list = response.toGameListEntity())
                     }
                 }
                 MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)

@@ -47,9 +47,9 @@ android {
 
 dependencies {
     implementation libs.dagger.hilt.android
-    kapt libs.dagger.hilt.android.compiler
     implementation libs.hilt.navigation.compose
     androidTestImplementation libs.dagger.android.testing
+    kapt libs.dagger.hilt.android.compiler
     kaptTest libs.dagger.hilt.android.compiler
 
     implementation(project(":domain"))

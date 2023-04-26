@@ -21,6 +21,7 @@ import com.anekra.util.Screens
 fun MainScreen(
     navHostController: NavHostController = rememberNavController(),
     onScreenLoaded: () -> Unit,
+    startDestination: String
 ) {
     val currentDestination = navHostController.currentBackStackEntryAsState().value?.destination
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -45,7 +46,7 @@ fun MainScreen(
         }
     ) { paddingValues ->
         MainNavGraph(
-            startDestination = Screens.Home.route,
+            startDestination = startDestination,
             navHostController = navHostController,
             paddingValues = paddingValues,
             onScreenLoaded = onScreenLoaded

@@ -25,7 +25,6 @@ fun MainNavGraph(
             navHostController = navHostController,
             paddingValues = paddingValues
         )
-        favoriteRoute(navHostController = navHostController, paddingValues = paddingValues)
         detailsRoute(navHostController = navHostController)
     }
 }

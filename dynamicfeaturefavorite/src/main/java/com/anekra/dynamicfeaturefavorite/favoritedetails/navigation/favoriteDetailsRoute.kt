@@ -1,4 +1,4 @@
-package com.anekra.capstoneapp.navigation
+package com.anekra.dynamicfeaturefavorite.favoritedetails.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -29,13 +28,14 @@ import com.anekra.util.Constants.GAME_ID_ARGS
 import com.anekra.util.LoadingBar
 import com.anekra.util.Screens
 import com.anekra.util.showToast
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
-fun NavGraphBuilder.detailsRoute(
-    navHostController: NavHostController,
+fun NavGraphBuilder.favoriteDetailsRoute(
+    navHostController: NavHostController
 ) {
     composable(
-        route = Screens.Details.route,
+        route = Screens.FavoriteDetails.route,
         arguments = listOf(
             navArgument(name = GAME_ID_ARGS) {
                 type = NavType.StringType
@@ -46,7 +46,7 @@ fun NavGraphBuilder.detailsRoute(
     ) {
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
         val padding = remember { mutableStateOf(PaddingValues()) }
-        val viewModel: DetailsViewModel = hiltViewModel()
+        val viewModel: DetailsViewModel = koinViewModel()
         val pagerState = rememberPagerState()
         val context = LocalContext.current
         var gameDetails by remember { mutableStateOf(viewModel.detailsState.game) }

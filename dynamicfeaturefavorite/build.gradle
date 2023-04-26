@@ -41,5 +41,10 @@ android {
 }
 
 dependencies {
+    implementation "io.insert-koin:koin-androidx-compose:3.2.2"
     implementation project(":app")
+    implementation project(":domain")
+    implementation project(":core:ui")
+    implementation project(":core:util")
+    implementation project(":feature:details")
 }

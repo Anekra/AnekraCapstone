@@ -1,4 +1,4 @@
-package com.anekra.favorite.screen
+package com.anekra.dynamicfeaturefavorite.presentation.screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,16 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anekra.domain.repository.GameRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import org.koin.java.KoinJavaComponent.inject
 
-@HiltViewModel
-class FavoriteViewModel @Inject constructor(
-    private val repository: GameRepository,
-) : ViewModel() {
+class FavoriteViewModel : ViewModel() {
+    private val repository: GameRepository by inject(GameRepository::class.java)
+    
     var favoriteState by mutableStateOf(FavoriteScreenState())
     
     init {

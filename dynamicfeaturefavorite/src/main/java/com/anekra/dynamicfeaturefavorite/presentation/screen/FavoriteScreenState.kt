@@ -1,4 +1,4 @@
-package com.anekra.favorite.screen
+package com.anekra.dynamicfeaturefavorite.presentation.screen
 
 import com.anekra.domain.model.game.GameWithScreenShotsDomain
 

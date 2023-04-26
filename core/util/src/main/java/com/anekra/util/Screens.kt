@@ -1,6 +1,7 @@
 package com.anekra.util
 
 import com.anekra.util.Constants.DETAILS_SCREEN
+import com.anekra.util.Constants.FAVORITE_DETAILS_SCREEN
 import com.anekra.util.Constants.FAVORITE_SCREEN
 import com.anekra.util.Constants.GAME_ID_ARGS
 import com.anekra.util.Constants.HOME_SCREEN
@@ -12,5 +13,8 @@ sealed class Screens(val route: String) {
     object Favorite: Screens(route = FAVORITE_SCREEN)
     object Details: Screens(route = "$DETAILS_SCREEN?$GAME_ID_ARGS={$GAME_ID_ARGS}") {
         fun passGameId(gameId: String) = "$DETAILS_SCREEN?$GAME_ID_ARGS=$gameId"
+    }
+    object FavoriteDetails: Screens(route = "$FAVORITE_DETAILS_SCREEN?$GAME_ID_ARGS={$GAME_ID_ARGS}") {
+        fun passFavoriteGameId(gameId: String) = "$FAVORITE_DETAILS_SCREEN?$GAME_ID_ARGS=$gameId"
     }
 }

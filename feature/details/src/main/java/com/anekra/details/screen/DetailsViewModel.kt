@@ -9,14 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.anekra.domain.Resource
 import com.anekra.domain.repository.GameRepository
 import com.anekra.util.Constants.GAME_ID_ARGS
-import com.anekra.util.logAsString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    val savedStateHandle: SavedStateHandle,
     private val repository: GameRepository,
 ) : ViewModel() {
     var detailsState by mutableStateOf(DetailsScreenState())
@@ -59,7 +58,6 @@ class DetailsViewModel @Inject constructor(
     
     private fun getGameIdArgumentAsync(): Deferred<String?> {
         return viewModelScope.async {
-            "gets called1".logAsString("detailsViewModel")
             savedStateHandle.get<String>(GAME_ID_ARGS) ?: ""
         }
     }
@@ -73,7 +71,6 @@ class DetailsViewModel @Inject constructor(
                         gameScreenShots = it?.screenShots
                     )
                 }
-            "gets called2".logAsString("detailsViewModel")
         }
     }
     
@@ -85,7 +82,7 @@ class DetailsViewModel @Inject constructor(
                     gameId = getGameId,
                     dataIsLocal = repository.getLocalGameDetails(id = getGameId) != null
                 )
-                "gets called3".logAsString("detailsViewModel")
+                
                 if (detailsState.dataIsLocal) {
                     getLocalGameWithScreenShots()
                 } else {
