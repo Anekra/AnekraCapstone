@@ -6,8 +6,6 @@ orbs:
 jobs:
   build:
     executor: android/android
-    environment:
-      ANDROID_HOME: /usr/local/android-sdk-linux
     docker:
       - image: circleci/openjdk:11-jdk
     steps:
