@@ -30,12 +30,6 @@ jobs:
       - run:
           name: Run Build
           command: ./gradlew build
-      - run:
-          name: Load environment variables
-          command: |
-            set -o allexport
-            source $CIRCLECI_PROPERTIES
-            set +o allexport
       - store_artifacts:
           path: app/build/reports
           destination: reports
